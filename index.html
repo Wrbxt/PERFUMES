@@ -221,12 +221,12 @@
 
   <script>
     const perfumes = [
+      { nome: "Attar Al Wesal", preco: 320, imagem: "ataral wesal.jpeg", notas: "Notas de Lavanda, Pera, Hortelã, Bergamota, Limão, Canela, Sálvia Esclaréia, Cominho, Baunilha Negra, Cedro, Âmbar e Patchouli." },
+      { nome: "Bareeq Al Dhahab", preco: 320, imagem: "baraq.jpeg", notas: "Notas de açafrão, rosa e âmbar." },
       { nome: "Ameerat Al Arab", preco: 350, imagem: "amerrat.jpeg", notas: "Notas florais com toques de frutas e âmbar." },
-      { nome: "Annar Al Oud", preco: 320, imagem: "baraq.jpeg", notas: "Notas de açafrão, rosa e âmbar." },
       { nome: "Asad Bourbon", preco: 320, imagem: "asad borbom.jpeg", notas: "Notas de rum, baunilha e fava tonka." },
       { nome: "Asad Elixir", preco: 500, imagem: "asad elixir.jpeg", notas: "Notas de baunilha, pimenta preta e madeira de oud." },
       { nome: "Attrazione Men", preco: 200, imagem: "atracione man.jpeg", notas: "Notas de especiarias, couro e âmbar." },
-      { nome: "Attar Al Wesal", preco: 320, imagem: "ataral wesal.jpeg", notas: "Notas de Lavanda, Pera, Hortelã, Bergamota, Limão, Canela, Sálvia Esclaréia, Cominho, Baunilha Negra, Cedro, Âmbar e Patchouli." },
       { nome: "Fakhar (Lattafa)", preco: 310, imagem: "fakar.jpeg", notas: "Notas de frutas, jasmim e almíscar." },
       { nome: "Maître the Blue", preco: 350, imagem: "maitre de blue.jpeg", notas: "Notas oceânicas, bergamota e âmbar cinza." },
       { nome: "Oud Mystery Intense", preco: 350, imagem: "old misteri.jpeg", notas: "Notas de oud, âmbar e especiarias orientais." },
@@ -279,17 +279,16 @@
       catalogo.appendChild(card);
     });
 
-    // Função para saudação por horário
+    // Saudação automática
     function saudacaoPorHorario() {
       const agora = new Date();
       const hora = agora.getHours();
-
       if (hora >= 0 && hora < 12) return "Bom dia";
       if (hora >= 12 && hora < 18) return "Boa tarde";
       return "Boa noite";
     }
 
-    // Clique no botão WhatsApp
+    // Botão WhatsApp
     whatsappBtn.addEventListener("click", () => {
       const lista = Array.from(selecionados)
         .map(i => `- ${perfumes[i].nome} (R$ ${perfumes[i].preco})`)
