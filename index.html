@@ -58,6 +58,7 @@
       flex-direction: column;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
       cursor: pointer;
+      position: relative;
     }
 
     .card:hover {
@@ -67,13 +68,13 @@
 
     .card.selected {
       border: 2px solid var(--gold);
-      box-shadow: 0 0 15px rgba(212,175,55,0.4);
-      animation: pulse 0.4s ease;
+      box-shadow: 0 0 25px rgba(212,175,55,0.6);
+      animation: cardPulse 0.4s ease;
     }
 
-    @keyframes pulse {
+    @keyframes cardPulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      50% { transform: scale(1.08); }
       100% { transform: scale(1); }
     }
 
@@ -125,12 +126,28 @@
       align-items: center;
       gap: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      transition: transform 0.2s;
+      animation: pulseWhatsApp 1.2s infinite;
       z-index: 10;
     }
 
-    #whatsapp-btn:hover {
-      transform: scale(1.05);
+    @keyframes pulseWhatsApp {
+      0% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+      50% { transform: scale(1.1); box-shadow: 0 6px 15px rgba(37,211,102,0.6); }
+      100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+    }
+
+    #contador {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(212,175,55,0.9);
+      color: #111;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 16px;
+      z-index: 10;
+      display: none;
     }
 
     footer {
@@ -141,7 +158,6 @@
       margin-top: 30px;
     }
 
-    /* Tela inicial */
     #intro-screen {
       position: fixed;
       top: 0;
@@ -203,6 +219,7 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
   </style>
 </head>
 <body>
@@ -215,6 +232,7 @@
   <header>Catálogo de Perfumes</header>
   <main id="catalogo"></main>
 
+  <div id="contador">0 selecionados</div>
   <button id="whatsapp-btn">Enviar para o WhatsApp 💬</button>
 
   <footer>© 2025 Catálogo de Perfumes</footer>
@@ -240,6 +258,7 @@
 
     const catalogo = document.getElementById("catalogo");
     const whatsappBtn = document.getElementById("whatsapp-btn");
+    const contador = document.getElementById("contador");
     const selecionados = new Set();
     const intro = document.getElementById("intro-screen");
     const enterBtn = document.getElementById("enter-btn");
@@ -274,7 +293,10 @@
           selecionados.add(index);
           card.classList.add("selected");
         }
-        whatsappBtn.style.display = selecionados.size > 0 ? "flex" : "none";
+        const total = selecionados.size;
+        contador.textContent = `${total} selecionado${total !== 1 ? 's' : ''}`;
+        contador.style.display = total > 0 ? "block" : "none";
+        whatsappBtn.style.display = total > 0 ? "flex" : "none";
       });
       catalogo.appendChild(card);
     });
