@@ -1,214 +1,304 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo de Perfumes</title>
-<style>
-:root {
-  --bg: #0b0b0b;
-  --card: #0f0f10;
-  --gold: #d4af37;
-  --muted: #bfbfbf;
-  --radius: 14px;
-  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Perfumes</title>
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --card: #0f0f10;
+      --gold: #d4af37;
+      --muted: #bfbfbf;
+      --radius: 14px;
+      --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-* { box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
-body {
-  margin: 0;
-  background: linear-gradient(180deg, #040404 0%, #0b0b0b 100%);
-  color: #eee;
-  font-family: var(--font);
-  overflow-x: hidden;
-}
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #404040 0%, #0b0b0b 100%);
+      color: #eee;
+      font-family: var(--font);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-main {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 1s ease;
-}
+    header {
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+      display: none;
+    }
 
-.visible { opacity: 1; }
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
 
-.card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
-  border: 1px solid rgba(212,175,55,0.2);
-  border-radius: var(--radius);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-  cursor: pointer;
-}
+    .visible {
+      opacity: 1;
+    }
 
-.card:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 12px 25px rgba(212,175,55,0.4);
-}
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
+      cursor: pointer;
+    }
 
-.card.selected {
-  animation: glow 0.6s ease forwards;
-  border: 2px solid var(--gold);
-}
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(212,175,55,0.2);
+    }
 
-@keyframes glow {
-  0% { box-shadow: 0 0 0 rgba(212,175,55,0.5); }
-  50% { box-shadow: 0 0 20px rgba(212,175,55,0.8); }
-  100% { box-shadow: 0 0 10px rgba(212,175,55,0.6); }
-}
+    .card.selected {
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 15px rgba(212,175,55,0.4);
+      animation: pulse 0.4s ease;
+    }
 
-.card img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-}
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
 
-.info { padding: 15px; flex: 1; display: flex; flex-direction: column; }
+    .card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
 
-.name { font-size: 20px; font-weight: bold; margin-bottom: 8px; color: var(--gold); }
+    .info {
+      padding: 15px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-.price { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 8px; }
+    .name {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: var(--gold);
+    }
 
-.notes { font-size: 14px; color: var(--muted); }
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 8px;
+    }
 
-#whatsapp-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: linear-gradient(90deg, #25D366, #128C7E);
-  color: white;
-  border: none;
-  border-radius: 40px;
-  padding: 14px 22px;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: bold;
-  display: none;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-  transition: transform 0.2s;
-  z-index: 10;
-  animation: pulseBtn 1.5s infinite;
-}
+    .notes {
+      font-size: 14px;
+      color: var(--muted);
+    }
 
-#whatsapp-btn:hover { transform: scale(1.05); }
+    #whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(90deg, #25D366, #128C7E);
+      color: white;
+      border: none;
+      border-radius: 40px;
+      padding: 14px 22px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      transition: transform 0.2s;
+      z-index: 10;
+    }
 
-@keyframes pulseBtn {
-  0%, 100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
-  50% { transform: scale(1.05); box-shadow: 0 6px 15px rgba(37, 211, 102,0.6); }
-}
+    #whatsapp-btn:hover {
+      transform: scale(1.05);
+    }
 
-footer { text-align: center; padding: 20px; font-size: 14px; color: #777; margin-top: 30px; }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #777;
+      margin-top: 30px;
+    }
 
-/* Tela inicial */
-#intro-screen {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle at center, #111 0%, #000 100%);
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  text-align: center; z-index: 100;
-  transition: opacity 1s ease, visibility 1s ease;
-}
+    /* Tela inicial */
+    #intro-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 100;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
 
-#intro-screen.hidden { opacity: 0; visibility: hidden; }
+    #intro-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
 
-#intro-screen h1 { font-size: 58px; color: var(--gold); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 15px; font-weight: 700; animation: fadeIn 2s ease; }
+    #intro-screen h1 {
+      font-size: 58px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 15px;
+      font-weight: 700;
+      animation: fadeIn 2s ease;
+    }
 
-#intro-screen p { font-size: 18px; color: #ccc; margin-bottom: 40px; font-weight: 300; animation: fadeIn 2s ease 0.5s both; }
+    #intro-screen p {
+      font-size: 18px;
+      color: #ccc;
+      margin-bottom: 40px;
+      font-weight: 300;
+      animation: fadeIn 2s ease 0.5s both;
+    }
 
-#enter-btn {
-  background: linear-gradient(90deg, var(--gold), #ffcc33);
-  border: none;
-  padding: 14px 32px;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 30px;
-  cursor: pointer;
-  color: #111;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: fadeIn 2s ease 1s both;
-}
+    #enter-btn {
+      background: linear-gradient(90deg, var(--gold), #ffcc33);
+      border: none;
+      padding: 14px 32px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      color: #111;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 2s ease 1s both;
+    }
 
-#enter-btn:hover { transform: scale(1.07); box-shadow: 0 0 18px rgba(212,175,55,0.6); }
+    #enter-btn:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 18px rgba(212,175,55,0.6);
+    }
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } 
-</style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
+  <div id="intro-screen">
+    <h1>Perfumes</h1>
+    <p>Descubra seu novo perfume favorito</p>
+    <button id="enter-btn">Entrar no Catálogo</button>
+  </div>
 
-<div id="intro-screen">
-  <h1>Perfumes</h1>
-  <p>Descubra seu novo perfume favorito</p>
-  <button id="enter-btn">Entrar no Catálogo</button>
-</div>
+  <header>Catálogo de Perfumes</header>
+  <main id="catalogo"></main>
 
-<main id="catalogo"></main>
+  <button id="whatsapp-btn">Enviar para o WhatsApp 💬</button>
 
-<button id="whatsapp-btn">Enviar para o WhatsApp</button>
+  <footer>© 2025 Catálogo de Perfumes</footer>
 
-<footer>© 2025 Catálogo de Perfumes</footer>
+  <script>
+    const perfumes = [
+      { nome: "Ameerat Al Arab", preco: 350, imagem: "amerrat.jpeg", notas: "Notas florais com toques de frutas e âmbar." },
+      { nome: "Annar Al Oud", preco: 320, imagem: "baraq.jpeg", notas: "Notas de açafrão, rosa e âmbar." },
+      { nome: "Asad Bourbon", preco: 320, imagem: "asad borbom.jpeg", notas: "Notas de rum, baunilha e fava tonka." },
+      { nome: "Asad Elixir", preco: 500, imagem: "asad elixir.jpeg", notas: "Notas de baunilha, pimenta preta e madeira de oud." },
+      { nome: "Attrazione Men", preco: 200, imagem: "atracione man.jpeg", notas: "Notas de especiarias, couro e âmbar." },
+      { nome: "Attar Al Wesal", preco: 320, imagem: "ataral wesal.jpeg", notas: "Notas de Lavanda, Pera, Hortelã, Bergamota, Limão, Canela, Sálvia Esclaréia, Cominho, Baunilha Negra, Cedro, Âmbar e Patchouli." },
+      { nome: "Fakhar (Lattafa)", preco: 310, imagem: "fakar.jpeg", notas: "Notas de frutas, jasmim e almíscar." },
+      { nome: "Maître the Blue", preco: 350, imagem: "maitre de blue.jpeg", notas: "Notas oceânicas, bergamota e âmbar cinza." },
+      { nome: "Oud Mystery Intense", preco: 350, imagem: "old misteri.jpeg", notas: "Notas de oud, âmbar e especiarias orientais." },
+      { nome: "Royal Amber", preco: 800, imagem: "royal amber.jpeg", notas: "Notas de âmbar, mel e madeiras nobres." },
+      { nome: "Sabah Al Ward Rosa", preco: 500, imagem: "sabah al ward rosa.jpeg", notas: "Notas de rosa damascena e almíscar suave." },
+      { nome: "Sabah Al Ward Vermelho", preco: 350, imagem: "sabay ward vermelho.jpeg", notas: "Notas de frutas vermelhas, rosa, jasmim e baunilha." },
+      { nome: "Salvo Intense", preco: 330, imagem: "salvo intense.jpeg", notas: "Notas de Bergamota, Lavanda, Pimenta de Szechuan, Anis Estrelado, Noz-moscada, Ambroxan e Baunilha." },
+      { nome: "Yara Moi (vidro branco)", preco: 330, imagem: "yara moi.jpeg", notas: "Notas de Jasmim, Pêssego, Caramelo, Âmbar, Patchouli e Sândalo." },
+      { nome: "Yara Rose", preco: 320, imagem: "yora rose.jpeg", notas: "Notas de Orquídea, Heliotrópio, Tangerina, Acorde Gourmand, Frutas Tropicais, Baunilha, Almíscar e Sândalo." }
+    ];
 
-<script>
-const perfumes = [
-  { nome: "Attar Al Wesal", preco: 320, imagem: "ataral wesal.jpeg", notas: "Topo: Lavanda, Pera, Hortelã, Bergamota, Limão. Coração: Canela, Sálvia, Cominho. Fundo: Baunilha Negra, Cedro, Âmbar, Patchouli." },
-  { nome: "Ameerat Al Arab", preco: 350, imagem: "amerrat.jpeg", notas: "Notas florais com toques de frutas e âmbar." },
-  { nome: "Asad Bourbon", preco: 320, imagem: "asad borbom.jpeg", notas: "Notas de rum, baunilha e fava tonka." },
-  { nome: "Asad Elixir", preco: 500, imagem: "asad elixir.jpeg", notas: "Notas de baunilha, pimenta preta e madeira de oud." },
-  { nome: "Bareeq Al Dhahab", preco: 320, imagem: "baraq.jpeg", notas: "Notas de açafrão, rosa e âmbar." },
-  { nome: "Fakhar (Lattafa)", preco: 310, imagem: "fakar.jpeg", notas: "Notas de frutas, jasmim e almíscar." },
-  { nome: "Maître the Blue", preco: 350, imagem: "maitre de blue.jpeg", notas: "Notas oceânicas, bergamota e âmbar cinza." },
-  { nome: "Oud Mystery Intense", preco: 350, imagem: "old misteri.jpeg", notas: "Notas de oud, âmbar e especiarias orientais." },
-  { nome: "Royal Amber", preco: 800, imagem: "royal amber.jpeg", notas: "Topo: Bergamota e Notas Verdes. Coração: Notas Doces, Melão, Abacaxi, Âmbar. Fundo: Almíscar, Notas Amadeiradas, Baunilha." },
-  { nome: "Sabah Al Ward Rosa", preco: 500, imagem: "sabah al ward rosa.jpeg", notas: "Notas de rosa damascena e almíscar suave." },
-  { nome: "Sabah Al Ward Vermelho", preco: 350, imagem: "sabay ward vermelho.jpeg", notas: "Notas de frutas vermelhas, rosa, jasmim e baunilha." },
-  { nome: "Salvo Intense", preco: 330, imagem: "salvo intense.jpeg", notas: "Topo: Bergamota. Coração: Lavanda, Pimenta de Szechuan, Anis Estrelado, Noz-moscada. Fundo: Ambroxan, Baunilha." },
-  { nome: "Attrazione Men", preco: 200, imagem: "atracione man.jpeg", notas: "Notas de especiarias, couro e âmbar." },
-  { nome: "Yara Moi (vidro branco)", preco: 330, imagem: "yara moi.jpeg", notas: "Topo: Jasmim, Pêssego. Coração: Caramelo, Âmbar. Fundo: Patchouli, Sândalo." },
-  { nome: "Yara Rose", preco: 320, imagem: "yora rose.jpeg", notas: "Topo: Orquídea, Heliotrópio, Tangerina. Coração: Acorde Gourmand, Frutas Tropicais. Fundo: Baunilha, Almíscar, Sândalo." }
-];
+    const catalogo = document.getElementById("catalogo");
+    const whatsappBtn = document.getElementById("whatsapp-btn");
+    const selecionados = new Set();
+    const intro = document.getElementById("intro-screen");
+    const enterBtn = document.getElementById("enter-btn");
 
-const catalogo = document.getElementById("catalogo");
-const whatsappBtn = document.getElementById("whatsapp-btn");
-const selecionados = new Set();
-const intro = document.getElementById("intro-screen");
-const enterBtn = document.getElementById("enter-btn");
+    // Tela de entrada
+    enterBtn.addEventListener("click", () => {
+      intro.classList.add("hidden");
+      document.querySelector("header").style.display = "block";
+      setTimeout(() => {
+        intro.style.display = "none";
+        catalogo.classList.add("visible");
+      }, 800);
+    });
 
-enterBtn.addEventListener("click", () => {
-  intro.classList.add("hidden");
-  setTimeout(() => { catalogo.classList.add("visible"); }, 800);
-});
+    // Geração dos cards
+    perfumes.forEach((p, index) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.innerHTML = `
+        <img src="${p.imagem}" alt="${p.nome}">
+        <div class="info">
+          <div class="name">${p.nome}</div>
+          <div class="price">R$ ${p.preco}</div>
+          <div class="notes">${p.notas}</div>
+        </div>
+      `;
+      card.addEventListener("click", () => {
+        if (selecionados.has(index)) {
+          selecionados.delete(index);
+          card.classList.remove("selected");
+        } else {
+          selecionados.add(index);
+          card.classList.add("selected");
+        }
+        whatsappBtn.style.display = selecionados.size > 0 ? "flex" : "none";
+      });
+      catalogo.appendChild(card);
+    });
 
-perfumes.forEach((p,index)=>{
-  const card=document.createElement("div");
-  card.classList.add("card");
-  card.innerHTML=`<img src="${p.imagem}" alt="${p.nome}"><div class="info"><div class="name">${p.nome}</div><div class="price">R$ ${p.preco}</div><div class="notes">${p.notas}</div></div>`;
-  card.addEventListener("click",()=>{
-    if(selecionados.has(index)){
-      selecionados.delete(index);
-      card.classList.remove("selected");
-    } else {
-      selecionados.add(index);
-      card.classList.add("selected");
+    // Função para saudação por horário
+    function saudacaoPorHorario() {
+      const agora = new Date();
+      const hora = agora.getHours();
+
+      if (hora >= 0 && hora < 12) return "Bom dia";
+      if (hora >= 12 && hora < 18) return "Boa tarde";
+      return "Boa noite";
     }
-    whatsappBtn.style.display=selecionados.size>0?"flex":"none";
-  });
-  catalogo.appendChild(card);
-});
 
-whatsappBtn.addEventListener("click",()=>{
-  const lista=Array.from(selecionados).map(i=>`- ${perfumes[i].nome} (R$ ${perfumes[i].preco})`).join("%0A");
-  const msg=`Oi! Estou interessado nos seguintes perfumes:%0A%0A${lista}%0A%0APode me enviar mais detalhes e preços, por favor?`;
-  const numero="556292112471";
-  window.open(`https://wa.me/${numero}?text=${msg}`,"_blank");
-});
-</script>
-
+    // Clique no botão WhatsApp
+    whatsappBtn.addEventListener("click", () => {
+      const lista = Array.from(selecionados)
+        .map(i => `- ${perfumes[i].nome} (R$ ${perfumes[i].preco})`)
+        .join("%0A");
+      const saudacao = saudacaoPorHorario();
+      const mensagem = `${saudacao}! Gostaria de saber mais sobre os seguintes perfumes:%0A%0A${lista}%0A%0APoderia me passar detalhes e disponibilidade?`;
+      const numero = "556292112471";
+      window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
+    });
+  </script>
 </body>
 </html>
